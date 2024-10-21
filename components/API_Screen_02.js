@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Ionicons } from '@expo/vector-icons';
+import Fontisto from '@expo/vector-icons/Fontisto';
 import {
     ScrollView,
     View,
@@ -21,17 +22,17 @@ export default function API_Screen_02({ route, navigation }) {
     const [taskTitle, setTaskTitle] = useState('');
 
     const fetchTasks = () => {
-        fetch('https://dummyjson.com/todos')
+        fetch('https://670b4935ac6860a6c2cba406.mockapi.io/api/ReactNative/tasks')
             .then(response => response.json())
-            .then(data => setTasks(data.todos))
+            .then(data => setTasks(data))
             .catch(error => console.error('Error fetching data:', error));
     };
 
     const addTask = (newTask) => {
-        fetch('https://dummyjson.com/todos/add', {
+        fetch('https://670b4935ac6860a6c2cba406.mockapi.io/api/ReactNative/tasks', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json; charset=UTF-8'
             },
             body: JSON.stringify(newTask)
         })
@@ -41,10 +42,10 @@ export default function API_Screen_02({ route, navigation }) {
     };
 
     const editTask = (updatedTask) => {
-        fetch(`https://dummyjson.com/todos/${updatedTask.id}`, {
+        fetch(`https://670b4935ac6860a6c2cba406.mockapi.io/api/ReactNative/tasks/${updatedTask.id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json; charset=UTF-8'
             },
             body: JSON.stringify(updatedTask)
         })
@@ -58,7 +59,7 @@ export default function API_Screen_02({ route, navigation }) {
     };
 
     const deleteTask = (taskId) => {
-        fetch(`https://dummyjson.com/todos/${taskId}`, {
+        fetch(`https://670b4935ac6860a6c2cba406.mockapi.io/api/ReactNative/tasks/${taskId}`, {
             method: 'DELETE'
         })
             .then(() => {
@@ -84,17 +85,17 @@ export default function API_Screen_02({ route, navigation }) {
 
     const handleEdit = (task) => {
         setCurrentTask(task);
-        setTaskTitle(task.todo);
+        setTaskTitle(task.title);
         setModalVisible(true);
     };
 
     const handleSubmit = () => {
-        const updatedTask = { ...currentTask, todo: taskTitle };
+        const updatedTask = { ...currentTask, title: taskTitle };
         editTask(updatedTask);
     };
 
     const filteredTasks = tasks.filter(task =>
-        String(task.todo).toLowerCase().includes(searchQuery.toLowerCase())
+        String(task.title).toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -111,7 +112,8 @@ export default function API_Screen_02({ route, navigation }) {
                 keyExtractor={(item) => (item.id ? item.id.toString() : Math.random().toString())}  // Ensure key is valid
                 renderItem={({ item }) => (
                     <View style={styles.taskItem}>
-                        <Text>{item.todo}</Text>
+                        <Fontisto name="checkbox-active" size={24} color="green" />
+                        <Text>{item.title}</Text>
                         <View style={styles.icons}>
                             <TouchableOpacity
                                 onPress={() => handleEdit(item)}
@@ -163,8 +165,8 @@ export default function API_Screen_02({ route, navigation }) {
                 </View>
             </Modal>
         </View>
-    );
-}
+    )
+};
 
 const styles = StyleSheet.create({
     container: {
