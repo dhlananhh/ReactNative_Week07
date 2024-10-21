@@ -12,7 +12,7 @@ import {
     Button
 } from "react-native";
 
-export default function API_Screen_02 ({ route, navigation }) {
+export default function API_Screen_02({ route, navigation }) {
     const { name } = route.params;
     const [tasks, setTasks] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -108,7 +108,7 @@ export default function API_Screen_02 ({ route, navigation }) {
             />
             <FlatList
                 data={filteredTasks}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => (item.id ? item.id.toString() : Math.random().toString())}  // Ensure key is valid
                 renderItem={({ item }) => (
                     <View style={styles.taskItem}>
                         <Text>{item.todo}</Text>
