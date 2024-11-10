@@ -8,9 +8,8 @@ import {
     StyleSheet
 } from "react-native";
 
-
 export default function Screen01 ({ navigation }) {
-    const [ name, setName ] = useState('');
+    const [name, setName] = useState('');
 
     return (
         <View style={styles.container}>
@@ -28,16 +27,9 @@ export default function Screen01 ({ navigation }) {
             >
                 <Text style={styles.buttonText}>GET STARTED →</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('API_Screen_03', { mode: 'add' })}
-            >
-                <Text style={styles.buttonText}>ADD TASK →</Text>
-            </TouchableOpacity>
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
